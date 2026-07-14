@@ -161,3 +161,10 @@ ul {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Auth Responsive */
+@media (max-width: 767px) {
+  .auth-brand-panel {
+    display: none !important;
+  }
+}

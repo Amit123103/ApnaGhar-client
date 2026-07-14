@@ -31,7 +31,7 @@ const TopNavigation = () => {
     alignItems: 'center',
     gap: '8px',
     color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
-    fontWeight: isActive ? '600',
+    fontWeight: isActive ? '600' : '500',
     fontSize: '15px',
     padding: '8px 16px',
     borderRadius: 'var(--radius-md)',
