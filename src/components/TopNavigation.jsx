@@ -11,21 +11,6 @@ const TopNavigation = () => {
   const { currentLocation, setIsSearchOpen } = useContext(AppContext);
   const { isAuthenticated } = useContext(AuthContext);
 
-  const navStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '70px',
-    backgroundColor: 'var(--surface)',
-    borderBottom: '1px solid var(--border)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 40px',
-    zIndex: 1000,
-    boxShadow: 'var(--shadow-sm)'
-  };
 
   const linkStyle = ({ isActive }) => ({
     display: 'flex',
@@ -40,41 +25,26 @@ const TopNavigation = () => {
     backgroundColor: isActive ? 'rgba(0,166,153,0.1)' : 'transparent'
   });
 
-  const authBtnStyle = (primary = false) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '10px 20px',
-    borderRadius: 'var(--radius-full)',
-    fontWeight: '700',
-    fontSize: '15px',
-    cursor: 'pointer',
-    border: primary ? 'none' : '1px solid var(--border)',
-    backgroundColor: primary ? 'var(--primary)' : 'transparent',
-    color: primary ? 'white' : 'var(--text-primary)',
-    transition: 'all 0.2s',
-    textDecoration: 'none'
-  });
 
   return (
-    <nav className="top-nav" style={navStyle}>
+    <nav className={`top-nav ${location.pathname === '/' ? 'force-mobile' : ''}`}>
       {/* Left: Logo & Location */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '40px', flex: 1 }}>
+      <div className="top-nav-left">
         <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(isAuthenticated ? '/explore' : '/')}>
-          <Logo size={32} />
-          <span style={{ fontSize: '24px', fontWeight: '800', color: 'var(--primary)', marginLeft: '12px' }}>ApnaGhar</span>
+          <Logo size={28} />
+          <span className="logo-text">ApnaGhar</span>
         </div>
         
         {isAuthenticated && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '14px' }}>
+          <div className="location-display">
             <MapPin size={16} />
-            <span>{currentLocation}</span>
+            <span className="line-clamp-1">{currentLocation}</span>
           </div>
         )}
       </div>
 
       {/* Center: Anchor Links */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', flex: 1 }}>
+      <div className="top-nav-center">
         {!isAuthenticated && location.pathname === '/' && (
           <>
             <a href="#features" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: '600', fontSize: '15px' }}>Features</a>
@@ -84,7 +54,7 @@ const TopNavigation = () => {
       </div>
 
       {/* Right: Actions / Auth */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '16px', flex: 1 }}>
+      <div className="top-nav-right">
         {isAuthenticated ? (
           <>
             <NavLink to="/explore" style={linkStyle}>
@@ -106,13 +76,13 @@ const TopNavigation = () => {
           </>
         ) : (
           <>
-            <NavLink to="/login" style={() => authBtnStyle(false)}>
-              <LogIn size={18} />
-              Log In
+            <NavLink to="/login" className="auth-btn auth-btn-outline">
+              <LogIn size={16} className="auth-btn-icon" />
+              <span>Log In</span>
             </NavLink>
-            <NavLink to="/signup" style={() => authBtnStyle(true)}>
-              <UserPlus size={18} />
-              Sign Up
+            <NavLink to="/signup" className="auth-btn auth-btn-primary">
+              <UserPlus size={16} className="auth-btn-icon" />
+              <span>Sign Up</span>
             </NavLink>
           </>
         )}

@@ -67,10 +67,91 @@ html, body {
 /* Navigation Responsive */
 .bottom-nav {
   display: flex;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 .top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-nav.force-mobile {
+  display: flex;
+}
+
+.top-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.top-nav-center {
   display: none;
 }
+
+.top-nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 1;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-left: 8px;
+}
+
+.location-display {
+  display: none;
+}
+
+.auth-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.auth-btn-outline {
+  border: 1px solid var(--border);
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.auth-btn-primary {
+  border: none;
+  background-color: var(--primary);
+  color: white;
+}
+
+@media (max-width: 767px) {
+  .auth-btn-icon {
+    display: none !important;
+  }
+}
+
 .app-container {
   padding-bottom: 70px;
 }
@@ -81,6 +162,35 @@ html, body {
   }
   .top-nav {
     display: flex !important;
+    padding: 0 40px;
+  }
+  .top-nav-left {
+    gap: 40px;
+  }
+  .top-nav-center {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex: 1;
+  }
+  .top-nav-right {
+    gap: 16px;
+  }
+  .logo-text {
+    font-size: 24px;
+    margin-left: 12px;
+  }
+  .location-display {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  .auth-btn {
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 15px;
   }
   .app-container {
     padding-bottom: 0 !important;
@@ -97,6 +207,9 @@ html, body {
 a {
   color: inherit;
   text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 button {
@@ -104,6 +217,9 @@ button {
   border: none;
   font-family: inherit;
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 ul {
@@ -151,6 +267,7 @@ ul {
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -158,6 +275,7 @@ ul {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
