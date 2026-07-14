@@ -8,7 +8,8 @@ import {
   signInWithPopup,
   updateProfile
 } from 'firebase/auth';
-import { auth } from '../firebase'; // Import the auth instance from firebase.js
+import { auth } from '../firebase';
+import { sendEmailNotification } from '../utils/emailService';
 
 export const AuthContext = createContext();
 
@@ -19,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 
   // Monitor auth state changes
   useEffect(() => {
-    // If firebase is not configured properly, this might fail, so we wrap it in a try-catch for safety
     try {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }) => {
       return () => unsubscribe();
     } catch (e) {
       console.warn("Firebase Auth Error - using mock state due to missing config", e);
-      // Fallback mock logic if Firebase config is missing
       const mockUser = localStorage.getItem('mockUser');
       if (mockUser) {
         setIsAuthenticated(true);
@@ -46,17 +45,24 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      if (auth.app.options.apiKey === "YOUR_API_KEY") {
+      if (!auth.app.options.apiKey || auth.app.options.apiKey === "YOUR_API_KEY") {
         throw new Error("Missing Firebase Config");
       }
-      return await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      
+      // Automatically send Login Notification Email
+      sendEmailNotification(email, userCredential.user.displayName || email.split('@')[0], 'login');
+      
+      return userCredential;
     } catch (error) {
       if (error.message === "Missing Firebase Config") {
-        // Fallback Mock Login
         console.warn("Using Mock Login because Firebase config is missing");
         setIsAuthenticated(true);
         setCurrentUser({ email, displayName: email.split('@')[0] });
         localStorage.setItem('mockUser', JSON.stringify({ email, displayName: email.split('@')[0] }));
+        
+        // Mock email sending
+        sendEmailNotification(email, email.split('@')[0], 'login');
         return;
       }
       throw error;
@@ -65,20 +71,27 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, name) => {
     try {
-      if (auth.app.options.apiKey === "YOUR_API_KEY") {
+      if (!auth.app.options.apiKey || auth.app.options.apiKey === "YOUR_API_KEY") {
         throw new Error("Missing Firebase Config");
       }
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
       // Update display name
       await updateProfile(userCredential.user, { displayName: name });
+      
+      // Automatically send Welcome Email
+      sendEmailNotification(email, name, 'signup');
+
       return userCredential;
     } catch (error) {
       if (error.message === "Missing Firebase Config") {
-        // Fallback Mock Signup
         console.warn("Using Mock Signup because Firebase config is missing");
         setIsAuthenticated(true);
         setCurrentUser({ email, displayName: name });
         localStorage.setItem('mockUser', JSON.stringify({ email, displayName: name }));
+        
+        // Mock email sending
+        sendEmailNotification(email, name, 'signup');
         return;
       }
       throw error;
@@ -87,14 +100,13 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogle = async () => {
     try {
-      if (auth.app.options.apiKey === "YOUR_API_KEY") {
+      if (!auth.app.options.apiKey || auth.app.options.apiKey === "YOUR_API_KEY") {
         throw new Error("Missing Firebase Config");
       }
       const provider = new GoogleAuthProvider();
       return await signInWithPopup(auth, provider);
     } catch (error) {
       if (error.message === "Missing Firebase Config") {
-        // Fallback Mock Google Login
         console.warn("Using Mock Google Login because Firebase config is missing");
         setIsAuthenticated(true);
         setCurrentUser({ email: "google.user@example.com", displayName: "Google User" });
@@ -107,7 +119,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      if (auth.app.options.apiKey === "YOUR_API_KEY") {
+      if (!auth.app.options.apiKey || auth.app.options.apiKey === "YOUR_API_KEY") {
         throw new Error("Missing Firebase Config");
       }
       await signOut(auth);
@@ -123,7 +135,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   if (loading) {
-    return <div style={{ minHeight: '100vh', backgroundColor: 'var(--surface)' }} />; // Loading screen
+    return <div style={{ minHeight: '100vh', backgroundColor: 'var(--surface)' }} />;
   }
 
   return (
