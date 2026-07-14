@@ -1,0 +1,123 @@
+[
+  {
+    "id": "1",
+    "name": "Greenwood Boys PG",
+    "type": "PG",
+    "gender": "Boys PG",
+    "address": "Sector 14, MG Road, City Center",
+    "city": "Gurgaon",
+    "distance": "1.2 km away",
+    "rating": 4.5,
+    "reviews": 128,
+    "startingRent": 6500,
+    "dailyRent": null,
+    "availableRooms": 3,
+    "verified": true,
+    "coverImage": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1cd2cb445c?w=800&q=80",
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80"
+    ],
+    "description": "Premium boys PG with attached washrooms, high-speed WiFi, and 3 times daily meals. Perfect for students and working professionals.",
+    "amenities": ["WiFi", "Food", "Power Backup", "CCTV", "Laundry"],
+    "facilities": ["Washing Machine", "RO Water", "Geyser", "Cupboard", "Study Table"],
+    "roomTypes": ["Single", "Double Sharing", "Triple Sharing"],
+    "rules": ["No smoking inside the premises", "Guests not allowed after 10 PM", "Rent to be paid by 5th of every month"],
+    "owner": {
+      "name": "Rajesh Kumar",
+      "phone": "9876543210",
+      "memberSince": "2021"
+    }
+  },
+  {
+    "id": "2",
+    "name": "Sunrise Girls Hostel",
+    "type": "Hostel",
+    "gender": "Girls PG",
+    "address": "Near Knowledge Park, Sector 62",
+    "city": "Noida",
+    "distance": "0.8 km away",
+    "rating": 4.8,
+    "reviews": 245,
+    "startingRent": 7000,
+    "dailyRent": null,
+    "availableRooms": 5,
+    "verified": true,
+    "coverImage": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80"
+    ],
+    "description": "Safe and secure girls hostel with biomertic entry. Includes full furnishing, AC rooms, and hygienic food.",
+    "amenities": ["WiFi", "Food", "Security", "CCTV", "AC"],
+    "facilities": ["Attached Bath", "Biometric Entry", "Library Room", "Gym"],
+    "roomTypes": ["Single", "Double Sharing"],
+    "rules": ["Entry closes at 9:30 PM", "Outside food not allowed in rooms"],
+    "owner": {
+      "name": "Sunita Devi",
+      "phone": "9876543211",
+      "memberSince": "2019"
+    }
+  },
+  {
+    "id": "3",
+    "name": "The Grand Azure Hotel",
+    "type": "Hotel",
+    "gender": "Family",
+    "address": "MG Road, Next to Metro Station",
+    "city": "Delhi",
+    "distance": "2.5 km away",
+    "rating": 4.2,
+    "reviews": 89,
+    "startingRent": null,
+    "dailyRent": 1500,
+    "availableRooms": 12,
+    "verified": false,
+    "coverImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80"
+    ],
+    "description": "Affordable luxury hotel for families and business travelers. Includes complimentary breakfast.",
+    "amenities": ["WiFi", "AC", "Parking", "Lift", "Food"],
+    "facilities": ["Room Service", "Daily Housekeeping", "TV", "Mini Fridge"],
+    "roomTypes": ["Deluxe", "Super Deluxe", "Suite"],
+    "rules": ["Couple friendly (Valid ID required)", "Check-in: 12 PM", "Check-out: 11 AM"],
+    "owner": {
+      "name": "Azure Hospitality",
+      "phone": "9876543212",
+      "memberSince": "2015"
+    }
+  },
+  {
+    "id": "4",
+    "name": "Urban Nest Studio",
+    "type": "Apartment",
+    "gender": "Any",
+    "address": "Koramangala Block 5",
+    "city": "Bangalore",
+    "distance": "3.1 km away",
+    "rating": 4.9,
+    "reviews": 56,
+    "startingRent": 18000,
+    "dailyRent": null,
+    "availableRooms": 1,
+    "verified": true,
+    "coverImage": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80"
+    ],
+    "description": "Fully furnished studio apartment ideal for IT professionals. Includes functional kitchen.",
+    "amenities": ["WiFi", "Kitchen", "Power Backup", "Parking", "Lift"],
+    "facilities": ["Induction Stove", "Refrigerator", "Washing Machine", "Sofa", "Smart TV"],
+    "roomTypes": ["1 BHK Studio"],
+    "rules": ["1 month advance deposit", "No loud music after 11 PM"],
+    "owner": {
+      "name": "Amit Sharma",
+      "phone": "9876543213",
+      "memberSince": "2022"
+    }
+  }
+]

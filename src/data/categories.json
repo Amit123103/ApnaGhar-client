@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "name": "PG",
+    "icon": "Home"
+  },
+  {
+    "id": "2",
+    "name": "Hostel",
+    "icon": "Building"
+  },
+  {
+    "id": "3",
+    "name": "Hotel",
+    "icon": "Hotel"
+  },
+  {
+    "id": "4",
+    "name": "Single Room",
+    "icon": "BedSingle"
+  },
+  {
+    "id": "5",
+    "name": "Double Room",
+    "icon": "BedDouble"
+  },
+  {
+    "id": "6",
+    "name": "Family Room",
+    "icon": "Users"
+  },
+  {
+    "id": "7",
+    "name": "Apartment",
+    "icon": "Building2"
+  }
+]
