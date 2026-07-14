@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Heart, User, MapPin, LogIn, UserPlus } from 'lucide-react';
 import { AppContext } from '../context/AppContext';
 import { AuthContext } from '../context/AuthContext';
@@ -7,7 +7,8 @@ import Logo from './Logo';
 
 const TopNavigation = () => {
   const navigate = useNavigate();
-  const { currentLocation } = useContext(AppContext);
+  const location = useLocation();
+  const { currentLocation, setIsSearchOpen } = useContext(AppContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   const navStyle = {
@@ -57,8 +58,9 @@ const TopNavigation = () => {
 
   return (
     <nav className="top-nav" style={navStyle}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/')}>
+      {/* Left: Logo & Location */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '40px', flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(isAuthenticated ? '/explore' : '/')}>
           <Logo size={32} />
           <span style={{ fontSize: '24px', fontWeight: '800', color: 'var(--primary)', marginLeft: '12px' }}>ApnaGhar</span>
         </div>
@@ -71,17 +73,28 @@ const TopNavigation = () => {
         )}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      {/* Center: Anchor Links */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', flex: 1 }}>
+        {!isAuthenticated && location.pathname === '/' && (
+          <>
+            <a href="#features" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: '600', fontSize: '15px' }}>Features</a>
+            <a href="#properties" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: '600', fontSize: '15px' }}>Properties</a>
+          </>
+        )}
+      </div>
+
+      {/* Right: Actions / Auth */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '16px', flex: 1 }}>
         {isAuthenticated ? (
           <>
             <NavLink to="/explore" style={linkStyle}>
               <Search size={20} />
               <span>Explore</span>
             </NavLink>
-            <NavLink to="/search" style={linkStyle}>
+            <button onClick={() => setIsSearchOpen(true)} style={{ ...linkStyle({ isActive: false }), border: 'none', background: 'none', cursor: 'pointer' }}>
               <Search size={20} />
               <span>Search</span>
-            </NavLink>
+            </button>
             <NavLink to="/favourites" style={linkStyle}>
               <Heart size={20} />
               <span>Saved</span>

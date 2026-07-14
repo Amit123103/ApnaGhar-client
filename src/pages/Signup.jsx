@@ -141,7 +141,7 @@ const Signup = () => {
 
       {/* Right Form Panel */}
       <div style={rightPanelStyle}>
-        <div style={{ position: 'absolute', top: '40px', left: '40px', cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'var(--text-secondary)' }} onClick={() => navigate(-1)}>
+        <div style={{ position: 'absolute', top: '40px', left: '40px', cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'var(--text-secondary)' }} onClick={() => navigate('/')}>
           <ChevronLeft size={24} />
           <span style={{ fontWeight: '500', marginLeft: '4px' }}>Back</span>
         </div>

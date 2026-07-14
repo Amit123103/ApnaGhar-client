@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [currentLocation, setCurrentLocation] = useState(
     localStorage.getItem('currentLocation') || 'New Delhi, India'
   );
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -67,7 +68,8 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider value={{
       theme, toggleTheme,
       locationGranted, grantLocation,
-      currentLocation
+      currentLocation,
+      isSearchOpen, setIsSearchOpen
     }}>
       {children}
     </AppContext.Provider>

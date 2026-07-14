@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       
       // Automatically send Login Notification Email
-      sendEmailNotification(email, userCredential.user.displayName || email.split('@')[0], 'login');
+      await sendEmailNotification(email, userCredential.user.displayName || email.split('@')[0], 'login');
       
       return userCredential;
     } catch (error) {
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('mockUser', JSON.stringify({ email, displayName: email.split('@')[0] }));
         
         // Mock email sending
-        sendEmailNotification(email, email.split('@')[0], 'login');
+        await sendEmailNotification(email, email.split('@')[0], 'login');
         return;
       }
       throw error;
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
       await updateProfile(userCredential.user, { displayName: name });
       
       // Automatically send Welcome Email
-      sendEmailNotification(email, name, 'signup');
+      await sendEmailNotification(email, name, 'signup');
 
       return userCredential;
     } catch (error) {
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('mockUser', JSON.stringify({ email, displayName: name }));
         
         // Mock email sending
-        sendEmailNotification(email, name, 'signup');
+        await sendEmailNotification(email, name, 'signup');
         return;
       }
       throw error;
@@ -104,7 +104,12 @@ export const AuthProvider = ({ children }) => {
         throw new Error("Missing Firebase Config");
       }
       const provider = new GoogleAuthProvider();
-      return await signInWithPopup(auth, provider);
+      const userCredential = await signInWithPopup(auth, provider);
+      
+      const isNewUser = userCredential.user.metadata.creationTime === userCredential.user.metadata.lastSignInTime;
+      await sendEmailNotification(userCredential.user.email, userCredential.user.displayName, isNewUser ? 'signup' : 'login');
+      
+      return userCredential;
     } catch (error) {
       if (error.message === "Missing Firebase Config") {
         console.warn("Using Mock Google Login because Firebase config is missing");

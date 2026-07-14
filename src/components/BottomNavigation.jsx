@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Home, Search, Heart, User } from 'lucide-react';
+import { AppContext } from '../context/AppContext';
 
 const BottomNavigation = () => {
+  const { setIsSearchOpen } = useContext(AppContext);
+
   const navStyle = {
     position: 'absolute',
     bottom: 0,
@@ -25,7 +28,10 @@ const BottomNavigation = () => {
     fontWeight: isActive ? '600' : '400',
     fontSize: '12px',
     gap: '4px',
-    transition: 'color 0.2s'
+    transition: 'color 0.2s',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer'
   });
 
   return (
@@ -38,14 +44,10 @@ const BottomNavigation = () => {
           </>
         )}
       </NavLink>
-      <NavLink to="/search" style={({ isActive }) => itemStyle(isActive)}>
-        {({ isActive }) => (
-          <>
-            <Search size={24} color={isActive ? 'var(--primary)' : 'var(--text-secondary)'} />
-            <span>Search</span>
-          </>
-        )}
-      </NavLink>
+      <button onClick={() => setIsSearchOpen(true)} style={itemStyle(false)}>
+        <Search size={24} color={'var(--text-secondary)'} />
+        <span>Search</span>
+      </button>
       <NavLink to="/favourites" style={({ isActive }) => itemStyle(isActive)}>
         {({ isActive }) => (
           <>

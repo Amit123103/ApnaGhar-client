@@ -17,6 +17,7 @@ import Signup from './pages/Signup';
 // Components
 import BottomNavigation from './components/BottomNavigation';
 import TopNavigation from './components/TopNavigation';
+import SearchOverlay from './components/SearchOverlay';
 import { AuthContext } from './context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
@@ -66,6 +67,7 @@ const AppContent = () => {
         </Routes>
       </div>
       {!shouldHideBottomNav && <BottomNavigation />}
+      <SearchOverlay />
     </>
   );
 };

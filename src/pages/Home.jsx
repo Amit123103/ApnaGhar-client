@@ -9,7 +9,7 @@ import PropertyCard from '../components/PropertyCard';
 import * as Icons from 'lucide-react';
 
 const Home = () => {
-  const { currentLocation } = useContext(AppContext);
+  const { currentLocation, setIsSearchOpen } = useContext(AppContext);
   const navigate = useNavigate();
 
   const filteredProperties = propertiesData.filter(property => {
@@ -51,7 +51,7 @@ const Home = () => {
 
       {/* Search Bar */}
       <div 
-        onClick={() => navigate('/search')}
+        onClick={() => setIsSearchOpen(true)}
         style={{
           display: 'flex', alignItems: 'center', backgroundColor: 'var(--surface)',
           padding: '14px 16px', borderRadius: 'var(--radius-lg)',

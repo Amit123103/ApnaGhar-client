@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, MessageCircle, Home as HomeIcon, Star, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, MessageCircle, Home as HomeIcon, Star, CheckCircle2, Search, Key, ChevronDown, Quote, MapPin } from 'lucide-react';
 import propertiesData from '../data/properties.json';
 import PropertyCard from '../components/PropertyCard';
 import { AuthContext } from '../context/AuthContext';
@@ -11,7 +11,7 @@ const Landing = () => {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--background)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, rgba(0, 166, 153, 0.08) 0%, #ffffff 50%, rgba(0, 166, 153, 0.05) 100%)' }}>
       {/* Hero Section */}
       <div style={{
         position: 'relative',
@@ -50,7 +50,7 @@ const Landing = () => {
       </div>
 
       {/* Features Section */}
-      <div style={{ padding: '80px 5%', backgroundColor: 'var(--surface)' }}>
+      <div id="features" style={{ padding: '80px 5%', backgroundColor: 'transparent' }}>
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
           <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '16px', color: 'var(--text-primary)' }}>Why Choose ApnaGhar?</h2>
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
@@ -75,8 +75,60 @@ const Landing = () => {
         </div>
       </div>
 
+      {/* How It Works Section */}
+      <div style={{ padding: '80px 5%', backgroundColor: 'transparent' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '16px', color: 'var(--text-primary)' }}>How It Works</h2>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
+            Your new home is just three simple steps away.
+          </p>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', maxWidth: '1000px', margin: '0 auto' }}>
+          {[
+            { step: '01', icon: Search, title: 'Search & Filter', desc: 'Browse through our verified listings and find the perfect match based on your preferences.' },
+            { step: '02', icon: MessageCircle, title: 'Contact Directly', desc: 'Connect with the owner directly via WhatsApp to discuss details and schedule a visit.' },
+            { step: '03', icon: Key, title: 'Move In', desc: 'Finalize the deal with zero brokerage and move into your new ApnaGhar.' }
+          ].map((item, i) => (
+            <div key={i} style={{ flex: '1 1 250px', textAlign: 'center', position: 'relative' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '40px', backgroundColor: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: '24px', fontWeight: 'bold' }}>
+                {item.step}
+              </div>
+              <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>{item.title}</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Popular Cities */}
+      <div style={{ padding: '80px 5%', backgroundColor: 'transparent' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '16px', color: 'var(--text-primary)' }}>Explore Popular Cities</h2>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
+            Find the best stays in India's top metropolitan hubs.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
+          {[
+            { name: 'New Delhi', image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80', count: '120+ Stays' },
+            { name: 'Mumbai', image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&q=80', count: '150+ Stays' },
+            { name: 'Bangalore', image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&q=80', count: '200+ Stays' },
+            { name: 'Pune', image: 'https://images.unsplash.com/photo-1605553198889-1052692233ce?w=800&q=80', count: '90+ Stays' }
+          ].map((city, i) => (
+            <div key={i} onClick={() => navigate('/explore')} style={{ cursor: 'pointer', position: 'relative', height: '300px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+              <img src={city.image} alt={city.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)' }} />
+              <div style={{ position: 'absolute', bottom: '24px', left: '24px', color: 'white' }}>
+                <h3 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '4px' }}>{city.name}</h3>
+                <p style={{ fontSize: '14px', opacity: 0.9 }}>{city.count}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Featured Properties Section */}
-      <div style={{ padding: '80px 5%' }}>
+      <div id="properties" style={{ padding: '80px 5%' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
           <div>
             <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '8px', color: 'var(--text-primary)' }}>Featured Stays</h2>
@@ -94,6 +146,42 @@ const Landing = () => {
         </div>
       </div>
 
+      {/* Testimonials */}
+      <div style={{ padding: '80px 5%', backgroundColor: 'transparent' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '16px', color: 'var(--text-primary)' }}>What Our Users Say</h2>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
+            Hear from people who found their perfect home through ApnaGhar.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
+          {[
+            { name: 'Aarav Sharma', role: 'Software Engineer', text: 'I saved over ₹25,000 on brokerage fees! The direct WhatsApp feature made it so easy to negotiate with the owner.' },
+            { name: 'Priya Desai', role: 'Student at DU', text: 'Finding a safe PG near my college was a nightmare until I used ApnaGhar. The verified photos gave me complete peace of mind.' },
+            { name: 'Rohan Gupta', role: 'Marketing Executive', text: 'The user interface is incredibly smooth. I found a premium apartment in just two days. Highly recommended!' }
+          ].map((testimonial, i) => (
+            <div key={i} style={{ padding: '32px', backgroundColor: 'var(--background)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', position: 'relative' }}>
+              <Quote size={40} color="var(--primary)" style={{ opacity: 0.2, position: 'absolute', top: '24px', right: '24px' }} />
+              <div style={{ display: 'flex', gap: '4px', marginBottom: '16px', color: '#FFB800' }}>
+                {[1,2,3,4,5].map(star => <Star key={star} size={16} fill="currentColor" />)}
+              </div>
+              <p style={{ fontSize: '16px', color: 'var(--text-primary)', lineHeight: 1.7, marginBottom: '24px', fontStyle: 'italic' }}>
+                "{testimonial.text}"
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '24px', backgroundColor: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '18px' }}>
+                  {testimonial.name.charAt(0)}
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>{testimonial.name}</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>{testimonial.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Trust Section */}
       <div style={{ padding: '80px 5%', backgroundColor: 'var(--primary)', color: 'white', textAlign: 'center' }}>
         <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '24px' }}>Trusted by 10,000+ Students & Professionals</h2>
@@ -101,6 +189,30 @@ const Landing = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '20px', fontWeight: '600' }}><CheckCircle2 size={28} /> 500+ Properties</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '20px', fontWeight: '600' }}><Star size={28} /> 4.8/5 Avg Rating</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '20px', fontWeight: '600' }}><ShieldCheck size={28} /> ₹0 Brokerage</div>
+        </div>
+      </div>
+
+      {/* FAQ */}
+      <div style={{ padding: '80px 5%', backgroundColor: 'transparent', maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <h2 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '16px', color: 'var(--text-primary)' }}>Frequently Asked Questions</h2>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {[
+            { q: 'Is ApnaGhar really 100% free of brokerage?', a: 'Yes! We connect you directly with property owners, completely eliminating any middlemen or broker fees.' },
+            { q: 'How do I know the property listings are genuine?', a: 'Our team physically visits and verifies properties. Look for the "Verified" badge on listings for complete peace of mind.' },
+            { q: 'Can I chat with the owner before visiting?', a: 'Absolutely. We provide a direct WhatsApp link on every property page so you can clear your doubts instantly.' },
+            { q: 'Are there any hidden charges?', a: 'No hidden charges at all. The platform is completely free to use for all tenants.' }
+          ].map((faq, i) => (
+            <details key={i} style={{ backgroundColor: 'var(--surface)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', cursor: 'pointer' }}>
+              <summary style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', outline: 'none' }}>
+                {faq.q}
+              </summary>
+              <p style={{ marginTop: '16px', fontSize: '16px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                {faq.a}
+              </p>
+            </details>
+          ))}
         </div>
       </div>
 
