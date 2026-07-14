@@ -5,6 +5,7 @@ import {
   signOut, 
   onAuthStateChanged,
   GoogleAuthProvider,
+  OAuthProvider,
   signInWithPopup,
   updateProfile
 } from 'firebase/auth';
@@ -122,6 +123,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithApple = async () => {
+    try {
+      if (!auth.app.options.apiKey || auth.app.options.apiKey === "YOUR_API_KEY") {
+        throw new Error("Missing Firebase Config");
+      }
+      const provider = new OAuthProvider('apple.com');
+      const userCredential = await signInWithPopup(auth, provider);
+      
+      const isNewUser = userCredential.user.metadata.creationTime === userCredential.user.metadata.lastSignInTime;
+      await sendEmailNotification(userCredential.user.email, userCredential.user.displayName, isNewUser ? 'signup' : 'login');
+      
+      return userCredential;
+    } catch (error) {
+      if (error.message === "Missing Firebase Config") {
+        console.warn("Using Mock Apple Login because Firebase config is missing");
+        setIsAuthenticated(true);
+        setCurrentUser({ email: "apple.user@example.com", displayName: "Apple User" });
+        localStorage.setItem('mockUser', JSON.stringify({ email: "apple.user@example.com", displayName: "Apple User" }));
+        return;
+      }
+      throw error;
+    }
+  };
+
   const logout = async () => {
     try {
       if (!auth.app.options.apiKey || auth.app.options.apiKey === "YOUR_API_KEY") {
@@ -150,7 +175,8 @@ export const AuthProvider = ({ children }) => {
       login, 
       signup, 
       logout,
-      loginWithGoogle
+      loginWithGoogle,
+      loginWithApple
     }}>
       {children}
     </AuthContext.Provider>

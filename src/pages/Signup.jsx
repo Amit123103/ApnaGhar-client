@@ -6,7 +6,7 @@ import Logo from '../components/Logo';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { signup, loginWithGoogle } = useContext(AuthContext);
+  const { signup, loginWithGoogle, loginWithApple } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,6 +34,16 @@ const Signup = () => {
       navigate('/location');
     } catch (err) {
       setError(err.message || 'Google signup failed.');
+    }
+  };
+
+  const handleAppleSignup = async () => {
+    setError('');
+    try {
+      await loginWithApple();
+      navigate('/location');
+    } catch (err) {
+      setError(err.message || 'Apple signup failed.');
     }
   };
 
@@ -226,7 +236,7 @@ const Signup = () => {
               </svg>
               Google
             </button>
-            <button style={socialBtnStyle}>
+            <button style={socialBtnStyle} onClick={handleAppleSignup}>
               <Smartphone size={20} />
               Apple
             </button>
