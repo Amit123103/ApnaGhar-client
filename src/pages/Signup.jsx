@@ -19,7 +19,7 @@ const Signup = () => {
     setIsLoading(true);
     try {
       await signup(email, password, name);
-      navigate('/explore');
+      navigate('/location');
     } catch (err) {
       setError(err.message || 'Failed to create account.');
     } finally {
@@ -31,7 +31,7 @@ const Signup = () => {
     setError('');
     try {
       await loginWithGoogle();
-      navigate('/explore');
+      navigate('/location');
     } catch (err) {
       setError(err.message || 'Google signup failed.');
     }

@@ -12,6 +12,16 @@ const Home = () => {
   const { currentLocation } = useContext(AppContext);
   const navigate = useNavigate();
 
+  const filteredProperties = propertiesData.filter(property => {
+    if (!currentLocation || currentLocation === 'Unknown Location' || currentLocation === 'Your Location') return true;
+    const locLower = currentLocation.toLowerCase();
+    const cityLower = property.city.toLowerCase();
+    return locLower.includes(cityLower) || cityLower.includes(locLower);
+  });
+
+  const displayProperties = filteredProperties.length > 0 ? filteredProperties : propertiesData;
+  const noExactMatch = filteredProperties.length === 0 && currentLocation !== 'New Delhi, India' && currentLocation !== 'Unknown Location';
+
   return (
     <div style={{ padding: '20px', paddingBottom: '90px' }}>
       {/* Header */}
@@ -50,7 +60,7 @@ const Home = () => {
         }}
       >
         <SearchIcon size={20} color="var(--text-secondary)" style={{ marginRight: '12px' }} />
-        <span style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>Search "PG in Gurgaon"</span>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>Search "PG in {currentLocation.split(',')[0]}"</span>
       </div>
 
       {/* Banner */}
@@ -107,12 +117,19 @@ const Home = () => {
 
       {/* Nearby Properties */}
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '700' }}>Nearby Properties</h3>
-          <span style={{ color: 'var(--primary)', fontSize: '14px', fontWeight: '600' }}>See All</span>
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: '700' }}>Nearby Properties</h3>
+            <span style={{ color: 'var(--primary)', fontSize: '14px', fontWeight: '600' }}>See All</span>
+          </div>
+          {noExactMatch && (
+            <span style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+              No stays found directly in your area. Showing featured properties instead.
+            </span>
+          )}
         </div>
         <div className="properties-grid">
-          {propertiesData.map(property => (
+          {displayProperties.map(property => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>
